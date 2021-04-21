@@ -4,6 +4,12 @@
 
 https://raw.githubusercontent.com/rrafols/mobile_test/master/data.json
 
+## Objectives
+
+- Show data in a nice way for mobiles and desktop, mobile first design
+- Browse and filter the individuals, add a search bar
+- Gnome gender optional
+
 ## Project setup
 
 ```
