@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<TopNavBar />
-		<DataTable />DataTable
+		<DataTable />
 	</div>
 </template>
 
