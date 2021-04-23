@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<md-table :value.sync="searched" md-sort="id" md-sort-order="asc" md-card md-fixed-header>
+		<md-table :value.sync="searched" md-sort="name" md-sort-order="desc" md-card md-fixed-header>
 			<md-table-toolbar>
 				<md-field md-clearable class="md-toolbar-section-end">
 					<md-input placeholder="Search by name..." v-model="search" />
@@ -10,8 +10,10 @@
 			<md-table-empty-state md-label="No users found" :md-description="`No user found for this '${search}' query. Try a different search term or create a new user.`">
 				<md-button class="md-primary md-raised" @click="newUser">Create New Character</md-button>
 			</md-table-empty-state>
-
 			<md-table-row slot="md-table-row" slot-scope="{ item }">
+				<md-table-cell md-label="Image">
+					<md-avatar class="md-large"> <img :src="item.thumbnail" alt="People" /> </md-avatar
+				></md-table-cell>
 				<md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
 				<md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
 			</md-table-row>
