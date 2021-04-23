@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<md-table :value.sync="searched" md-sort="name" md-sort-order="desc" md-card md-fixed-header>
+		<md-table :value.sync="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
 			<md-table-toolbar>
 				<md-field md-clearable class="md-toolbar-section-end">
 					<md-input placeholder="Search by name..." v-model="search" />
