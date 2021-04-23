@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<md-table :value="posts" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+		<md-table :value.sync="posts" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
 			<md-table-toolbar>
 				<md-field md-clearable class="md-toolbar-section-end">
 					<md-input placeholder="Search by name..." v-model="search" @input="searchOnTable" />
@@ -36,18 +36,20 @@ export default {
 	name: "DataTable",
 	data: () => ({
 		search: null,
+		searched: [],
 	}),
-	mounted() {
-		this.$store.dispatch("getPosts");
-	},
-	computed: {
-		posts() {
-			return this.$store.state.posts;
-		},
 
-		searched: {
-			get: () => this.$store.state.posts,
-			set: (value) => value,
+	computed: {
+		posts: {
+			get() {
+				console.log("get");
+				return this.$store.state.posts;
+			},
+			set(value) {
+				this.posts = value;
+				this.searched = value;
+				console.log("sets");
+			},
 		},
 	},
 	methods: {
@@ -58,8 +60,9 @@ export default {
 			this.searched = searchByName(this.posts, this.search);
 		},
 	},
-	created() {
-		console.log("POSTS", this.posts);
+
+	mounted() {
+		this.$store.dispatch("getPosts");
 	},
 };
 </script>

@@ -25,9 +25,9 @@ const actions = {
 
 //to handle mutations
 const mutations = {
-	SET_POSTS(state, posts) {
-		state.posts = posts;
-		console.log(posts);
+	SET_POSTS(state, payload) {
+		state.posts = payload;
+		console.log(state.posts);
 	},
 };
 
