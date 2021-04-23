@@ -1,9 +1,9 @@
 <template>
 	<div>
-		<md-table :value.sync="posts" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+		<md-table :value.sync="searched" md-sort="id" md-sort-order="asc" md-card md-fixed-header>
 			<md-table-toolbar>
 				<md-field md-clearable class="md-toolbar-section-end">
-					<md-input placeholder="Search by name..." v-model="search" @input="searchOnTable" />
+					<md-input placeholder="Search by name..." v-model="search" />
 				</md-field>
 			</md-table-toolbar>
 
@@ -12,8 +12,8 @@
 			</md-table-empty-state>
 
 			<md-table-row slot="md-table-row" slot-scope="{ item }">
-				<md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
 				<md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
+				<md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
 			</md-table-row>
 		</md-table>
 	</div>
@@ -34,35 +34,30 @@ const searchByName = (items, term) => {
 
 export default {
 	name: "DataTable",
+	mounted() {
+		this.$store.dispatch("getPosts");
+	},
 	data: () => ({
-		search: null,
-		searched: [],
+		search: "",
 	}),
 
 	computed: {
-		posts: {
-			get() {
-				console.log("get");
-				return this.$store.state.posts;
-			},
-			set(value) {
-				this.posts = value;
-				this.searched = value;
-				console.log("sets");
-			},
+		posts() {
+			return this.$store.state.posts;
+		},
+
+		searched() {
+			if (this.search) {
+				return searchByName(this.posts, this.search);
+			} else {
+				return this.posts;
+			}
 		},
 	},
 	methods: {
 		newUser() {
 			window.alert("Noop");
 		},
-		searchOnTable() {
-			this.searched = searchByName(this.posts, this.search);
-		},
-	},
-
-	mounted() {
-		this.$store.dispatch("getPosts");
 	},
 };
 </script>
