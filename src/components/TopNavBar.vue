@@ -13,11 +13,15 @@
 			</md-toolbar>
 
 			<md-list>
-				<md-list-item>
+				<md-list-item to="/" @click="showNavigation = false">
+					<md-icon>send</md-icon>
+					<span class="md-list-item-text">Data Table</span>
+				</md-list-item>
+				<md-list-item to="/about-app" @click="showNavigation = false">
 					<md-icon>send</md-icon>
 					<span class="md-list-item-text">About this app</span>
 				</md-list-item>
-				<md-list-item>
+				<md-list-item to="/about-me" @click="showNavigation = false">
 					<md-icon>send</md-icon>
 					<span class="md-list-item-text">About John Moran</span>
 				</md-list-item>
