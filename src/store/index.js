@@ -6,15 +6,12 @@ import Vue from "vue";
 //load Vuex
 Vue.use(Vuex);
 
-const toLower = (text) => {
-	return text.toString().toLowerCase();
-};
-
 //export store module
 export const store = new Vuex.Store({
 	state: {
 		loading: true,
 		posts: [],
+		postsPerTen: [],
 		term: "",
 	},
 
@@ -24,9 +21,11 @@ export const store = new Vuex.Store({
 		},
 		searchByName(state) {
 			if (state.term) {
-				return state.posts.filter((item) => toLower(item.name).includes(toLower(state.term)));
+				let sposts = state.posts.filter((item) => item.name.toLowerCase().includes(state.term.toLowerCase()));
+				return sposts.slice(0, 10);
+			} else {
+				return state.postsPerTen;
 			}
-			return state.posts;
 		},
 	},
 
@@ -36,9 +35,19 @@ export const store = new Vuex.Store({
 				.get("https://raw.githubusercontent.com/rrafols/mobile_test/master/data.json")
 				.then((response) => {
 					commit("SET_POSTS", response.data.Brastlewark);
+					this.getPerTen();
+				})
+				.catch((err) => console.log(err));
+
+			axios
+				.get("https://raw.githubusercontent.com/rrafols/mobile_test/master/data.json")
+
+				.then((response) => {
+					commit("SET_POSTS_PER_TEN", response.data.Brastlewark.slice(0, 10));
 				})
 				.catch((err) => console.log(err));
 		},
+
 		saveText({ commit }, text) {
 			commit("SAVE_TEXT", text);
 		},
@@ -47,8 +56,13 @@ export const store = new Vuex.Store({
 	mutations: {
 		SET_POSTS(state, payload) {
 			state.posts = payload;
-			state.loading = false;
 			console.log(state.posts);
+		},
+
+		SET_POSTS_PER_TEN(state, payload) {
+			state.postsPerTen = payload;
+			state.loading = false;
+			console.log(state.postsPerTen);
 		},
 
 		SAVE_TEXT(state, payload) {
