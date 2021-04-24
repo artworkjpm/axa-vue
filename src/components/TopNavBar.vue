@@ -4,12 +4,12 @@
 			<md-button class="md-icon-button" @click="showNavigation = true">
 				<md-icon>menu</md-icon>
 			</md-button>
-			<span class="md-title">Brastlewark Population</span>
+			<span class="md-title">Brastlewark, total population: {{ total }}</span>
 		</md-toolbar>
 
 		<md-drawer :md-active.sync="showNavigation" md-swipeable>
 			<md-toolbar class="md-transparent" md-elevation="0">
-				<span class="md-title">Brastlewark Population</span>
+				<span class="md-title">Brastlewark App</span>
 			</md-toolbar>
 
 			<md-list>
@@ -37,6 +37,14 @@ export default {
 		showNavigation: false,
 		showSidepanel: false,
 	}),
+	computed: {
+		total() {
+			return this.$store.state.posts.length;
+		},
+		searchByName() {
+			return this.$store.getters.searchByName;
+		},
+	},
 };
 </script>
 
