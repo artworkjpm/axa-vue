@@ -43,7 +43,7 @@ export const store = new Vuex.Store({
 				.get("https://raw.githubusercontent.com/rrafols/mobile_test/master/data.json")
 
 				.then((response) => {
-					commit("SET_POSTS_PER_TEN", response.data.Brastlewark.slice(0, 10));
+					commit("SET_POSTS_PER_TEN", response.data.Brastlewark.slice(0, 5));
 				})
 				.catch((err) => console.log(err));
 		},
