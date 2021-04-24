@@ -23,13 +23,17 @@
 					><b>{{ item.name }}</b></md-table-cell
 				>
 
-				<md-table-cell md-label="Age" md-sort-by="age">{{ item.age }}</md-table-cell>
+				<md-table-cell md-label="Age" md-sort-by="age" class="nowrap">{{ item.age }} years</md-table-cell>
 
-				<md-table-cell md-label="Height" md-sort-by="height">{{ item.height }}</md-table-cell>
+				<md-table-cell md-label="Height" md-sort-by="height" class="nowrap">{{ item.height.toFixed(2) }} cm</md-table-cell>
 
-				<md-table-cell md-label="Weight" md-sort-by="weight">{{ item.weight }}</md-table-cell>
+				<md-table-cell md-label="Weight" md-sort-by="weight" class="nowrap">{{ item.weight.toFixed(2) }} kg</md-table-cell>
 
-				<md-table-cell md-label="Hair Color" md-sort-by="hair_color">{{ item.hair_color }}</md-table-cell>
+				<md-table-cell md-label="Hair Color" md-sort-by="hair_color"
+					><md-chip :style="{ backgroundColor: item.hair_color }"
+						><b>{{ item.hair_color }}</b></md-chip
+					></md-table-cell
+				>
 
 				<md-table-cell md-label="Professions" md-numeric>
 					<div v-for="el in item.professions" v-bind:key="el">
@@ -84,5 +88,8 @@ export default {
 }
 .md-table-content {
 	max-height: 100vh !important;
+}
+.nowrap {
+	white-space: nowrap;
 }
 </style>

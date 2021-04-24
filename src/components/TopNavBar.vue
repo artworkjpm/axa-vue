@@ -4,7 +4,7 @@
 			<md-button class="md-icon-button" @click="showNavigation = true">
 				<md-icon>menu</md-icon>
 			</md-button>
-			<span class="md-title">Brastlewark, total population: {{ total }}</span>
+			<span class="md-title">Brastlewark population: {{ total }}</span>
 		</md-toolbar>
 
 		<md-drawer :md-active.sync="showNavigation" md-swipeable>
@@ -13,15 +13,15 @@
 			</md-toolbar>
 
 			<md-list>
-				<md-list-item to="/" @click="showNavigation = false">
+				<md-list-item to="/" @click="showNavigation = false" exact>
 					<md-icon>send</md-icon>
 					<span class="md-list-item-text">Data Table</span>
 				</md-list-item>
-				<md-list-item to="/about-app" @click="showNavigation = false">
+				<md-list-item to="/about-app" @click="showNavigation = false" exact>
 					<md-icon>send</md-icon>
 					<span class="md-list-item-text">About this app</span>
 				</md-list-item>
-				<md-list-item to="/about-me" @click="showNavigation = false">
+				<md-list-item to="/about-me" @click="showNavigation = false" exact>
 					<md-icon>send</md-icon>
 					<span class="md-list-item-text">About John Moran</span>
 				</md-list-item>

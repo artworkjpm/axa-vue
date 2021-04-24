@@ -35,7 +35,6 @@ export const store = new Vuex.Store({
 				.get("https://raw.githubusercontent.com/rrafols/mobile_test/master/data.json")
 				.then((response) => {
 					commit("SET_POSTS", response.data.Brastlewark);
-					this.getPerTen();
 				})
 				.catch((err) => console.log(err));
 
