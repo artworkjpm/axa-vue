@@ -56,13 +56,11 @@ export const store = new Vuex.Store({
 	mutations: {
 		SET_POSTS(state, payload) {
 			state.posts = payload;
-			console.log(state.posts);
 		},
 
 		SET_POSTS_PER_TEN(state, payload) {
 			state.postsPerTen = payload;
 			state.loading = false;
-			console.log(state.postsPerTen);
 		},
 
 		SAVE_TEXT(state, payload) {
