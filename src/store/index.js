@@ -6,35 +6,53 @@ import Vue from "vue";
 //load Vuex
 Vue.use(Vuex);
 
-//to handle state
-const state = {
-	posts: [],
-};
-
-//to handle state
-const getters = {};
-
-//to handle actions
-const actions = {
-	getPosts({ commit }) {
-		axios.get("https://raw.githubusercontent.com/rrafols/mobile_test/master/data.json").then((response) => {
-			commit("SET_POSTS", response.data.Brastlewark);
-		});
-	},
-};
-
-//to handle mutations
-const mutations = {
-	SET_POSTS(state, payload) {
-		state.posts = payload;
-		console.log(state.posts);
-	},
+const toLower = (text) => {
+	return text.toString().toLowerCase();
 };
 
 //export store module
-export default new Vuex.Store({
-	state,
-	getters,
-	actions,
-	mutations,
+export const store = new Vuex.Store({
+	state: {
+		loading: true,
+		posts: [],
+		term: "",
+	},
+
+	getters: {
+		loading(state) {
+			return state.loading;
+		},
+		searchByName(state) {
+			if (state.term) {
+				return state.posts.filter((item) => toLower(item.name).includes(toLower(state.term)));
+			}
+			return state.posts;
+		},
+	},
+
+	actions: {
+		getPosts({ commit }) {
+			axios
+				.get("https://raw.githubusercontent.com/rrafols/mobile_test/master/data.json")
+				.then((response) => {
+					commit("SET_POSTS", response.data.Brastlewark);
+				})
+				.catch((err) => console.log(err));
+		},
+		saveText({ commit }, text) {
+			commit("SAVE_TEXT", text);
+		},
+	},
+
+	mutations: {
+		SET_POSTS(state, payload) {
+			state.posts = payload;
+			state.loading = false;
+			console.log(state.posts);
+		},
+
+		SAVE_TEXT(state, payload) {
+			state.term = payload;
+		},
+	},
 });

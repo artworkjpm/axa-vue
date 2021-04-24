@@ -1,66 +1,82 @@
 <template>
 	<div>
-		<md-table :value.sync="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+		<div v-if="loading" class="loader">
+			<md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
+		</div>
+
+		<md-table v-if="!loading" :value.sync="searchByName" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
 			<md-table-toolbar>
 				<md-field md-clearable class="md-toolbar-section-end">
-					<md-input placeholder="Search by name..." v-model="search" />
+					<md-input placeholder="Search by name..." v-model="search" @input="saveText()" />
 				</md-field>
 			</md-table-toolbar>
 
-			<md-table-empty-state md-label="No users found" :md-description="`No user found for this '${search}' query. Try a different search term or create a new user.`">
-				<md-button class="md-primary md-raised" @click="newUser">Create New Character</md-button>
-			</md-table-empty-state>
+			<md-table-empty-state md-label="No character found" :md-description="`No character was found for this '${search}' query. Try a different character name`"> </md-table-empty-state>
 			<md-table-row slot="md-table-row" slot-scope="{ item }">
-				<md-table-cell md-label="Image">
+				<md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
+
+				<md-table-cell md-label="Avatar">
 					<md-avatar class="md-large"> <img :src="item.thumbnail" alt="People" /> </md-avatar
 				></md-table-cell>
+
 				<md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
-				<md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
+
+				<md-table-cell md-label="Age" md-sort-by="age">{{ item.age }}</md-table-cell>
+
+				<md-table-cell md-label="Height" md-sort-by="height">{{ item.height }}</md-table-cell>
+
+				<md-table-cell md-label="Weight" md-sort-by="weight">{{ item.weight }}</md-table-cell>
+
+				<md-table-cell md-label="Hair Color" md-sort-by="hair_color">{{ item.hair_color }}</md-table-cell>
+
+				<md-table-cell md-label="Professions" md-numeric>
+					<div v-for="el in item.professions" v-bind:key="el">
+						<div>{{ el }}</div>
+					</div>
+				</md-table-cell>
+				<md-table-cell md-label="Friends" md-numeric>
+					<div v-for="el in item.friends" v-bind:key="el">
+						<div>{{ el }}</div>
+					</div>
+				</md-table-cell>
 			</md-table-row>
 		</md-table>
 	</div>
 </template>
 
 <script>
-const toLower = (text) => {
-	return text.toString().toLowerCase();
-};
-
-const searchByName = (items, term) => {
-	if (term) {
-		return items.filter((item) => toLower(item.name).includes(toLower(term)));
-	}
-
-	return items;
-};
-
 export default {
 	name: "DataTable",
 	mounted() {
 		this.$store.dispatch("getPosts");
 	},
 	data: () => ({
-		search: "",
+		search: null,
 	}),
 
 	computed: {
-		posts() {
-			return this.$store.state.posts;
+		loading() {
+			return this.$store.getters.loading;
 		},
-
-		searched() {
-			if (this.search) {
-				return searchByName(this.posts, this.search);
-			} else {
-				return this.posts;
-			}
+		searchByName() {
+			return this.$store.getters.searchByName;
 		},
 	},
 	methods: {
-		newUser() {
-			window.alert("Noop");
+		saveText() {
+			this.$store.dispatch("saveText", this.search);
+			this.$store.getters.searchByName;
 		},
 	},
 };
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.loader {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+}
+.md-table-content {
+	max-height: 100vh !important;
+}
+</style>
