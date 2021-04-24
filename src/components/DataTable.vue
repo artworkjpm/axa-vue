@@ -19,7 +19,9 @@
 					<md-avatar class="md-large"> <img :src="item.thumbnail" alt="People" /> </md-avatar
 				></md-table-cell>
 
-				<md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
+				<md-table-cell md-label="Name" md-sort-by="name"
+					><b>{{ item.name }}</b></md-table-cell
+				>
 
 				<md-table-cell md-label="Age" md-sort-by="age">{{ item.age }}</md-table-cell>
 
@@ -36,7 +38,7 @@
 				</md-table-cell>
 				<md-table-cell md-label="Friends" md-numeric>
 					<div v-for="el in item.friends" v-bind:key="el">
-						<div>{{ el }}</div>
+						<md-button class="md-dense md-raised md-primary" @click="showFriend(el)">{{ el }}</md-button>
 					</div>
 				</md-table-cell>
 			</md-table-row>
@@ -66,6 +68,10 @@ export default {
 		saveText() {
 			this.$store.dispatch("saveText", this.search);
 			this.$store.getters.searchByName;
+		},
+		showFriend(friendName) {
+			this.search = friendName;
+			this.$store.dispatch("saveText", this.search);
 		},
 	},
 };
