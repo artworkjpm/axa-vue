@@ -1,5 +1,7 @@
 # axa-vue
 
+Hosted: https://vue-axa.netlify.app/
+
 ## How to run this app
 
 Run
